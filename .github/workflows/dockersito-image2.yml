@@ -49,12 +49,7 @@ jobs:
     - name: Checking Vulnerabilities Scan Results
       run: |
         cat results.json | jq '.vulnerabilities | { totalVulnCount, criticalCount, highCount, mediumCount, lowCount, negligibleCount, unknownCount } | to_entries | .[] | "\(.key): \(.value)"'
-        if jq -e '.vulnerabilities.criticalCount <= 503 and .vulnerabilities.highCount <= 531 and .vulnerabilities.mediumCount <= 508' results.json > /dev/null; then
-          echo "✅ Se cumple con los criterios de vulnerabilidades. Continuando con el pipeline."
-        else
-          echo "❌ No se cumple con los criterios de vulnerabilidades. Deteniendo el pipeline."
-          exit 1
-        fi
+        cat results.json | jq '.vulnerabilities.criticalCount <= 503 and .vulnerabilities.highCount <= 531 and .vulnerabilities.mediumCount <= 508' | grep -q false && { echo "No se cumple con los criterios de vulnerabilidades. Deteniendo el pipeline."; exit 1; } || echo "Se cumple con los criterios de vulnerabilidades. Continuando con el pipeline."
 
 
 
