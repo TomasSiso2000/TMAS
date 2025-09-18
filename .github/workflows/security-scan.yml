@@ -1,0 +1,26 @@
+name: Security Scan with TMAS
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  tmas-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Scan with Trend Micro TMAS
+        uses: trendmicro/tmas-scan-action@v2
+        with:
+          version: '2'
+          vulnerabilitiesScan: true      # Escaneo de vulnerabilidades
+          malwareScan: true              # Escaneo de malware
+          secretsScan: true              # Detección de secretos
+          artifact: dir:.                # Qué escanear (en este caso, todo el repo)
+          additionalArgs: --region=eu-central-1
+          tmasApiKey: ${{ secrets.TMAS_API_KEY }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
