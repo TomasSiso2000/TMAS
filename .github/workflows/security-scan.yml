@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download TMAS and Scan Repo for Open Source Vulnerabilities and Secrets
-        uses: trendmicro/tmas-scan-action@v4
+        uses: trendmicro/tmas-scan-action@v3
         with:
           version: '2' # Recommended: pin to major version for automatic updates within v2.x.x
           vulnerabilitiesScan: true
