@@ -21,7 +21,7 @@ jobs:
           malwareScan: false              # Escaneo de malware
           secretsScan: true              # Detección de secretos
           artifact: dir:.                # Qué escanear (en este caso, todo el repo)
-          additionalArgs: --region=eu-central-1
+          additionalArgs: --region=us-east-1
           tmasApiKey: ${{ secrets.TMAS_API_KEY }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 
