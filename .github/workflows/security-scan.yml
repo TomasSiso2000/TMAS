@@ -1,24 +1,27 @@
-name: TMAS Scan
+name: Security Scan with TMAS
 
 on:
+  pull_request:
+    branches: [ main ]
   push:
+    branches: [ main ]
 
 jobs:
   tmas-scan:
-    name: TMAS Repo Scan
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Download TMAS and Scan Repo for Open Source Vulnerabilities and Secrets
-        uses: trendmicro/tmas-scan-action@vX
+      - name: Scan with Trend Micro TMAS
+        uses: trendmicro/tmas-scan-action@v2
         with:
-          version: '2' # Recommended: pin to major version for automatic updates within v2.x.x
-          vulnerabilitiesScan: true
-          malwareScan: false
-          secretsScan: true
-          artifact: dir:.
+          version: '2'
+          vulnerabilitiesScan: true      # Escaneo de vulnerabilidades
+          malwareScan: true              # Escaneo de malware
+          secretsScan: true              # Detección de secretos
+          artifact: dir:.                # Qué escanear (en este caso, todo el repo)
           additionalArgs: --region=eu-central-1
           tmasApiKey: ${{ secrets.TMAS_API_KEY }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+
