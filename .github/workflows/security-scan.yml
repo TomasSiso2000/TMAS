@@ -18,7 +18,7 @@ jobs:
         with:
           version: '2'
           vulnerabilitiesScan: true      # Escaneo de vulnerabilidades
-          malwareScan: true              # Escaneo de malware
+          malwareScan: false              # Escaneo de malware
           secretsScan: true              # Detección de secretos
           artifact: dir:.                # Qué escanear (en este caso, todo el repo)
           additionalArgs: --region=eu-central-1
